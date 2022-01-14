@@ -2,6 +2,9 @@ FROM node:latest
 
 WORKDIR /usr/app
 
+ARG TOKEN
+ENV TOKEN=${TOKEN}
+
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install

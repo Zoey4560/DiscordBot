@@ -2,7 +2,6 @@
   "name": "discordbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "node ./build/bot.js",
     "test": "echo \"Error: no test specified\" && exit 1",
