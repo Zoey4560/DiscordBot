@@ -6,7 +6,7 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
 	execute(interaction: CommandInteraction) {
-		interaction.reply('Pong!')
+		return interaction.reply('Pong!')
 	},
 }
 

@@ -26,11 +26,10 @@ client.on('interactionCreate', interaction => {
 	const command = client.commands.get(interaction.commandName)
 	if (!command) return
 
-	return command.execute(interaction)
-	  .catch(e => {
-			console.error(e)
-			interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
-		})
+	return command.execute(interaction).catch(e => {
+		console.error(e)
+		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+	})
 })
 
 client.login(process.env.TOKEN)
