@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./build/bot.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "node ./build/registerCommands.js",
+    "dockerize": "docker build -t db --build-arg TOKEN=%TOKEN% --build-arg CLIENT_ID=%CLIENT_ID% --build-arg GUILD_ID=%GUILD_ID% . && docker run --rm -it db"
   },
   "repository": {
     "type": "git",
