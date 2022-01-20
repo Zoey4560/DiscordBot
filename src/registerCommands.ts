@@ -3,6 +3,8 @@ import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import fs from 'fs'
 
+import {Command} from './types'
+
 const token = process.env.TOKEN
 const clientId = process.env.CLIENT_ID
 const guildId = process.env.GUILD_ID
@@ -13,7 +15,7 @@ if (token == undefined || clientId == undefined || guildId == undefined) {
 
 const commands: unknown[] = []
 for (const file of fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'))) {
-	const command = require(`./commands/${file}`)
+	const command: Command = require(`./commands/${file}`)
 	commands.push(command.data.toJSON())
 }
 

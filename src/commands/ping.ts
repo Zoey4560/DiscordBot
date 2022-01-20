@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
 import { CommandInteraction } from 'discord.js'
+import {Command} from '../types'
 
-module.exports = {
+module.exports = <Command>{
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
@@ -9,7 +10,3 @@ module.exports = {
 		return interaction.reply('Pong!')
 	},
 }
-
-
-//TODO reusabile type/implementation for this
-// type=/as {data: SlashCommandBuilder, execute: (i: CommandInteraction) => Promise<void>}
