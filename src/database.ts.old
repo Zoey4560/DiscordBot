@@ -1,0 +1,30 @@
+import {Low, JSONFile} from 'lowdb'
+
+//lowdb based. can't use without upgrading from commonjs to ESM
+
+type Schema = {
+	lists: Map<string, string[]>
+}
+
+const defaultDatabase = {lists: new Map<string, string[]>()}
+
+
+export class Database {
+	engine: Low<Schema>
+
+	constructor() {
+		this.engine = new Low(new JSONFile('db.json'))
+		this.engine.read()
+			.then(() => {
+				this.engine.data ||= defaultDatabase
+			})
+			.catch(e => {
+				console.error('DB failed to initialize')
+				console.error(e)
+			})
+		//TODO possible bug where a command (or something using the DB) comes in before the promise has resolved.
+		//     could move this to an `async .init()` and top lvl await; but need to upgrade to es2022 for that
+	}
+
+
+}

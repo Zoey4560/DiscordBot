@@ -1,12 +1,11 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
-import { CommandInteraction } from 'discord.js'
-import {Command} from '../types'
+import {Command, ExecuteInput} from '../types'
 
 module.exports = <Command>{
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
-	execute(interaction: CommandInteraction) {
-		return interaction.reply('Pong!')
+	execute(input: ExecuteInput) {
+		return input.interaction.reply('Pong!')
 	},
 }

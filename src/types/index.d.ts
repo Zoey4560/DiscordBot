@@ -1,7 +1,19 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
-import { CommandInteraction } from 'discord.js'
+import { Client, Collection, Command, CommandInteraction } from 'discord.js'
+
+import { Database } from './database'
+
+export type SuperClient = Client & {
+	commands: Collection<string, Command>,
+	db: Database
+}
 
 export type Command = {
 	data: SlashCommandBuilder,
-	execute: (i: CommandInteraction) => Promise<void>
+	execute: (input: ExecuteInput) => Promise<void>
+}
+
+export type ExecuteInput = {
+	interaction: CommandInteraction,
+	db: Database
 }

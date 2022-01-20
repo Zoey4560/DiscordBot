@@ -1,14 +1,14 @@
-import {Client, Collection, Intents} from 'discord.js'
+import { Client, Collection, Intents } from 'discord.js'
 import fs from 'fs'
 
-import {Command} from './types'
+import { Command, SuperClient } from './types'
+import { Database } from './database'
 
-type ClientWithCommands = Client & {commands: Collection<string, Command>}
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS]}) as ClientWithCommands
+const client = new Client({intents: [Intents.FLAGS.GUILDS]}) as SuperClient
+client.db = new Database()
 client.commands = new Collection()
 
-//from discordjs.guide
 for (const file of fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'))) {
 	const command: Command = require(`./commands/${file}`)
 	client.commands.set(command.data.name, command)
@@ -17,10 +17,10 @@ for (const file of fs.readdirSync(__dirname + '/commands').filter(file => file.e
 client.on('interactionCreate', interaction => {
 	if (!interaction.isCommand()) return
 
-	const command = client.commands.get(interaction.commandName)
+	const command: Command = client.commands.get(interaction.commandName)
 	if (!command) return
 
-	return command.execute(interaction).catch(e => {
+	return command.execute({interaction: interaction, db: client.db}).catch(e => {
 		console.error(e)
 		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
 	})
